@@ -22,8 +22,11 @@ config();
 connectDB()
 const app = express()
 app.use(cors({
-  origin: process.env.CLIENT_URL, // your frontend URL e.g. https://yourapp.com
-  credentials: true,              // needed if you're sending cookies
+  origin: [
+    "http://localhost:5173",
+    "https://freelance-flow-ashy.vercel.app",  // no trailing slash
+  ],
+  credentials: true,
 }));
 //Body parsing middleware
 app.use(helmet());
