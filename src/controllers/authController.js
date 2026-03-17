@@ -82,6 +82,7 @@ const logout = async (req, res) => {
 const getUser = async (req, res, next) => {
   try {
     // req.user is already set by authMiddleware (without password)
+    const user = req.user
     res.status(200).json({ status: "success", data: { user } });
   } catch (error) {
     next(error);
