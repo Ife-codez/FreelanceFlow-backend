@@ -1,7 +1,6 @@
 
 import "dotenv/config";
 import express from "express";
-import { authLimiter } from "./middleware/rateLimiter.js";
 import helmet from "helmet";
 import { config } from "dotenv"
 import { connectDB, disconnectDB } from "./config/db.js";
@@ -32,7 +31,7 @@ app.use(cors({
 app.use(helmet());
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use("/auth", authLimiter, authRoutes)
+app.use("/auth", authRoutes)
 app.use("/clients", clientRoutes)
 app.use("/projects", projectRoutes)
 app.use("/payments", paymentRoutes)
