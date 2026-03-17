@@ -78,4 +78,13 @@ const logout = async (req, res) => {
     message: "Logged out successfully"
   })
 }
-export {register, login, logout };
+const getUser = async (req, res, next) => {
+  try {
+    // req.user is already set by authMiddleware (without password)
+    res.status(200).json(req.user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export {register, login, logout, getUser };
