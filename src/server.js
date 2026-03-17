@@ -9,7 +9,7 @@ import authRoutes from "./routes/authRoutes.js"
 import clientRoutes from "./routes/clientRoutes.js"
 import projectRoutes from "./routes/projectRoutes.js"
 import paymentRoutes from "./routes/paymentRoutes.js"
-
+import { authMiddleware } from "./middleware/authMiddleware.js";
 const requiredEnvVars = ["DATABASE_URL", "JWT_SECRET"];
 requiredEnvVars.forEach((key) => {
   if (!process.env[key]) {
@@ -31,7 +31,7 @@ app.use(cors({
 app.use(helmet());
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use("/auth", authRoutes)
+app.use("/auth", authMiddleware, authRoutes)
 app.use("/clients", clientRoutes)
 app.use("/projects", projectRoutes)
 app.use("/payments", paymentRoutes)

@@ -6,5 +6,5 @@ import { registerSchema, loginSchema } from "../validators/authValidators.js";
 router.post("/register",validateRequest(registerSchema), register )
 router.post("/login", validateRequest(loginSchema), login )
 router.post("/logout", logout )
-router.get("/user", authMiddleware, getUser);
+router.get("/user", getUser);
 export default router
