@@ -9,7 +9,7 @@ import authRoutes from "./routes/authRoutes.js"
 import clientRoutes from "./routes/clientRoutes.js"
 import projectRoutes from "./routes/projectRoutes.js"
 import paymentRoutes from "./routes/paymentRoutes.js"
-import { authMiddleware } from "./middleware/authMiddleware.js";
+import cookieParser from "cookie-parser";
 const requiredEnvVars = ["DATABASE_URL", "JWT_SECRET"];
 requiredEnvVars.forEach((key) => {
   if (!process.env[key]) {
@@ -29,6 +29,7 @@ app.use(cors({
 }));
 //Body parsing middleware
 app.use(helmet());
+app.use(cookieParser());
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use("/auth", authRoutes)
