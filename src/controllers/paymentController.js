@@ -2,7 +2,7 @@ import { prisma } from "../config/db.js";
 
 // POST /api/payments
 const addPayment = async (req, res) => {
-  const { invoiceNumber, amount, dueDate, status, projectId } = req.body;
+  const {amount, dueDate, status, projectId } = req.body;
 
   try {
     // ✅ include client so we can traverse project → client → userId
@@ -14,7 +14,8 @@ const addPayment = async (req, res) => {
     if (!project || project.client.userId !== req.user.id) {
       return res.status(404).json({ message: "Project not found" });
     }
-
+    const count = await prisma.payment.count();
+    const invoiceNumber = `INV-${String(count + 1).padStart(3, "0")}`;
     const payment = await prisma.payment.create({
       data: {
         invoiceNumber,
