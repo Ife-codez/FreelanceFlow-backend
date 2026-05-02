@@ -88,5 +88,28 @@ const deleteClient = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+// PUT /api/clients/:id
+const updateClient = async (req, res) => {
+  const userId = req.user.id;
+  const { id } = req.params;
+  const { clientName, companyName, email, phone } = req.body;
 
-export { addClient, getClients, getClient, deleteClient };
+  try {
+    const client = await prisma.client.findUnique({ where: { id } });
+
+    if (!client || client.userId !== userId) {
+      return res.status(404).json({ message: "Client not found" });
+    }
+
+    const updated = await prisma.client.update({
+      where: { id },
+      data: { clientName, companyName, email, phone },
+    });
+
+    res.status(200).json({ message: "Client updated successfully", client: updated });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+export { addClient, getClients, getClient, deleteClient, updateClient };

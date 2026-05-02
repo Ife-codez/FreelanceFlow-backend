@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router()
-import { addClient, getClients, getClient, deleteClient } from "../controllers/clientController.js";
+import { addClient, getClients, getClient, deleteClient, updateClient } from "../controllers/clientController.js";
 import { validateRequest } from "../middleware/validateRequest.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 import { addClientSchema } from "../validators/clientValidators.js";
@@ -10,4 +10,5 @@ router.post("/", validateRequest(addClientSchema), addClient )
 router.get("/", getClients )
 router.get("/:id", getClient )
 router.delete("/:id", deleteClient )
+router.put("/:id", updateClient)
 export default router
